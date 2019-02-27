@@ -26,10 +26,12 @@ To run the game
 To run the tests
 + npm run test
 
+Player can navigate the board by either clicking into a cell with the mouse or using
+the arrow and tab keys.
 
-A player can create a brand new board by clicking on the 'New Game' button.
+Player can create a brand new board by clicking on the 'New Game' button.
 
-A player can check if thay have completed the board correctly by clicking the 'Check' button.
+Player can check if thay have completed the board correctly by clicking the 'Check' button.
 
 ## Further development
 With more time to develop the game I would like to add a number of different things.
