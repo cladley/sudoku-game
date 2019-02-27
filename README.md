@@ -1,6 +1,6 @@
 # Sudoku Game
 
-## Techical Information
+## Technical Information
 Technolgies used in game creation.
 + Javascript
 + Css Modules
