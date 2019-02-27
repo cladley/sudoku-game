@@ -15,7 +15,7 @@ all values that are in the square's same row, column and 3x3 block. With this
 list I then compare with all valid numbers and extract numbers that have not been used yet.
 I pick a number at random from this list and place in the squre and then move to the next empty square. 
 If I do not have anymore valid numbers to place and I have not reached the end of the board, this means
-that the board is incorrect. With this, I go back to the previous square I was at try and different number.
+that the board is incorrect. With this, I go back to the previous square I was at and try a different number.
 This is called a recursive backtracking algorithm.  
 
 ## Instructions for use
@@ -38,5 +38,5 @@ With more time to develop the game I would like to add a number of different thi
 + Option to create different sized boards.
 + Improve styling so that it works nicely for mobile.
 + Give option to show user the completed board.
-+ Analyse the algorithm to improve performance.
++ Analyze the algorithm to improve performance.
 + Create a range of tests to fully test the game.
