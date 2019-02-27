@@ -12,7 +12,7 @@ class SudokuGame {
   createNewGame() {
     this.gameBoard = sudoku.createNewPuzzle();
     this.completedGameBoard = this.copyArray(this.gameBoard);
-    // this.clearRandomSquares(this.gameBoard);
+    this.clearRandomSquares(this.gameBoard);
 
     this.grid = create2DArray(this.rows, this.columns, {
       isEdit: false,
@@ -53,7 +53,10 @@ class SudokuGame {
   checkIfCorrect(board) {
     for (let row = 0; row < this.rows; row++) {
       for (let col = 0; col < this.columns; col++) {
-        if (this.grid[row][col].value !== this.completedGameBoard[row][col]) {
+        
+        if(!this.grid[row][col].value) return;
+
+        if (parseInt(this.grid[row][col].value) !== this.completedGameBoard[row][col]) {
           return false;
         }
       }

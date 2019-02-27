@@ -140,6 +140,9 @@ const sudoku = {
     }
   },
 
+  /**
+   * Loops through board and clear random squares.
+   */
   clearRandomSquares(board) {
     for (let row = 0; row < board[0].length; row++) {
       let randomNumber = this.getRandomNumber(3, 5);

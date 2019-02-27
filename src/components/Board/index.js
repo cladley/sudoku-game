@@ -2,9 +2,6 @@ import React from "react";
 import styles from "./board.module.css";
 import Cell from "../Cell";
 import SudokuGame from "../../SudokuGame";
-import { create2DArray } from "../../helpers/createArrays";
-import SudukoChecker from "../../SudukoChecker";
-import sudoku from "../../sudoku";
 
 class Board extends React.Component {
   state = {
@@ -39,7 +36,12 @@ class Board extends React.Component {
           key={count++}
           row={row}
           column={column}
-          onClick={() => this.handleCellClick({ row, column })}
+          onClick={(e) => {
+            console.log(e);
+            e.stopPropagation();
+            this.handleCellClick({ row, column })
+          }
+        }
           onCellUpdate={value => this.handleCellUpdate(row, column, value)}
           onDirectionChange={direction =>
             this.moveToNextCell(direction, row, column)
@@ -53,6 +55,10 @@ class Board extends React.Component {
     return cells;
   }
 
+  /**
+   * Causes cursor to move to the next cell. Wraps when it 
+   * reaches end of row or column.
+   */
   moveToNextCell(direction, currentRow, currentColumn) {
     const { game } = this.state;
     const { rows, columns } = this.props;
@@ -87,11 +93,17 @@ class Board extends React.Component {
     });
   }
 
+  /**
+   * Gets all values contained in a row
+   */
   getRowValues(row, column) {
     const { game } = this.state;
     return game.getRowValues(row);
   }
 
+  /**
+   * Gets all values contained in a column
+   */
   getColumnValues(row, column) {
     const { game } = this.state;
     return game.getColumnValues(row);
@@ -106,8 +118,12 @@ class Board extends React.Component {
     });
   };
 
+  /**
+   * Updates game grid and cause a UI rerender
+   */
   handleCellUpdate(row, column, value) {
     const { game } = this.state;
+
     game.getItemAt(row, column).value = value;
 
     this.setState({
@@ -115,20 +131,23 @@ class Board extends React.Component {
     });
   }
 
-  // This is for when we are checking to see if we have a winner
-  gatherValuesForChecking() {
-    const { game } = this.state;
-    const { rows, columns } = this.props;
-    const gridNumbers = create2DArray(rows, columns);
+  /**
+   * Clears the board of any focus state.
+   */
+  handleWrapperClick() {
+    const {game} = this.state;
 
     game.forEach((item, row, column) => {
-      gridNumbers[row][column] = Number.parseInt(item.value);
-    });
-
-    return gridNumbers;
+      item.isEdit = false;
+    })
+    this.setState({
+      game: game
+    })
   }
 
-  // This is for when we are checking to see if we have a winner
+  /**
+   * Checks if the board has been completed.
+   */
   checkIfComplete() {
     const { game } = this.state;
     if (game.checkIfCorrect()) {
@@ -151,20 +170,29 @@ class Board extends React.Component {
     const { rows, columns } = this.props;
     return (
       <React.Fragment>
-        <div className={styles.grid}>{this.renderCells(rows, columns)}</div>
-        <button
-          className={styles["new-game-button"]}
-          onClick={() => this.checkIfComplete()}
-        >
-          Check
-        </button>
+        <div className={styles.wrapper} onClick={() => this.handleWrapperClick()}>
+          <div className={styles.grid}>{this.renderCells(rows, columns)}</div>
 
-        <button
-          className={styles["check-game-button"]}
-          onClick={() => this.createNewGame()}
-        >
-          New Game
-        </button>
+          <div className={styles['button-group']}>
+            <button
+              className={styles["check-game-button"]}
+              onClick={(e) => {
+                e.stopPropagation();
+                this.createNewGame()}}
+            >
+              New Game
+            </button>
+           
+           <button
+              className={styles["new-game-button"]}
+              onClick={(e) => {
+                e.stopPropagation();
+                this.checkIfComplete()}}
+            >
+              Check
+            </button>
+        </div>
+        </div>
       </React.Fragment>
     );
   }

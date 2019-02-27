@@ -31,12 +31,12 @@ class Cell extends React.Component {
     const { value, isEdit, onCellUpdate, onClick } = this.props;
 
     return (
-      <div className={styles.cell} {...this.props}>
+      <div className={styles.cell} onClick={(e) => onClick(e)}>
         {isEdit ? (
           <NumberInput
             autoFocus
             value={value}
-            onEnterPress={onClick}
+            onEnterPress={(e) => onClick(e)}
             onKeyPress={this.onDirectionKeyPress}
             onKeyDown={this.onDirectionKeyPress}
             onChange={e => onCellUpdate(e.target.value)}
